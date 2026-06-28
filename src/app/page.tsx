@@ -67,9 +67,10 @@ export default function LandingPage() {
       style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100vh', overflowY: 'auto' }}
       className="flex flex-col grid-bg"
     >
+      <div className="spotlight" />
       {/* top bar */}
       <nav
-        style={{ borderBottom: '1px solid var(--border)' }}
+        style={{ borderBottom: '1px solid var(--border)', position: 'relative', zIndex: 1 }}
         className="flex items-center justify-between px-8 py-4"
       >
         <span className="mono text-sm" style={{ color: 'var(--text)' }}>your amigo</span>
@@ -84,7 +85,7 @@ export default function LandingPage() {
       </nav>
 
       {/* hero */}
-      <div className="flex-1 flex flex-col items-center justify-center px-8 py-24">
+      <div className="flex-1 flex flex-col items-center justify-center px-8 py-24" style={{ position: 'relative', zIndex: 1 }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
