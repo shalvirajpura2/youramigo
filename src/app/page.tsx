@@ -19,6 +19,7 @@ const MISSION_TEMPLATES = [
 export default function LandingPage() {
   const router = useRouter()
   const [input, setInput] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
 
   const handleStart = () => {
     router.push('/missions')
@@ -37,7 +38,7 @@ export default function LandingPage() {
       >
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/* <AmigoOrb size={18} /> */}
+            <span style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 18, color: 'var(--text)' }}>your amigo</span>
           </div>
           <div className="flex items-center gap-6">
             <Link href="/missions" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
@@ -70,7 +71,7 @@ export default function LandingPage() {
 
       {/* hero dual-column container */}
       <div
-        className="flex-1 flex flex-col lg:flex-row items-center justify-between px-8 lg:px-16 py-16 gap-12"
+        className="flex-1 flex flex-col lg:flex-row items-center justify-between px-8 lg:px-16 py-28 gap-12"
         style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto', width: '100%' }}
       >
         {/* Left Column: Headline, Input & Templates */}
@@ -81,26 +82,6 @@ export default function LandingPage() {
           className="flex flex-col items-start text-left"
           style={{ flex: 1, maxWidth: 520 }}
         >
-          {/* Version Pill */}
-          <div
-            style={{
-              padding: '4px 10px',
-              border: '1px solid var(--border)',
-              borderRadius: 20,
-              background: 'var(--card)',
-              fontSize: 10,
-              color: 'var(--text-2)',
-              marginBottom: 20,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-            }}
-          >
-            {/* <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--accent)' }} className="animate-pulse-dot" /> */}
-            <span style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 30, color: 'var(--text)', marginRight: 4 }}>your amigo</span>
-            {/* <span className="mono">/ v1.0</span> */}
-          </div>
-
           <h1
             style={{
               fontSize: 'clamp(38px, 4.5vw, 54px)',
@@ -126,24 +107,28 @@ export default function LandingPage() {
             <div
               style={{
                 display: 'flex',
-                border: '1px solid var(--border)',
+                border: isFocused ? '1px solid var(--accent)' : '1px solid var(--border)',
+                boxShadow: isFocused ? '0 0 16px rgba(46, 99, 165, 0.18)' : 'none',
                 borderRadius: 8,
                 background: 'var(--card)',
                 overflow: 'hidden',
                 width: '100%',
+                transition: 'all 0.2s ease',
               }}
             >
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleStart()}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
                 placeholder="describe a mission for your amigo..."
                 style={{
                   flex: 1,
                   background: 'transparent',
                   border: 'none',
                   outline: 'none',
-                  padding: '12px 16px',
+                  padding: '14px 20px',
                   color: 'var(--text)',
                   fontSize: 13,
                   fontFamily: 'Inter, sans-serif',
@@ -155,7 +140,7 @@ export default function LandingPage() {
                   background: 'var(--text)',
                   color: 'var(--bg)',
                   border: 'none',
-                  padding: '0 20px',
+                  padding: '0 24px',
                   cursor: 'pointer',
                   fontSize: 12,
                   fontWeight: 500,
