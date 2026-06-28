@@ -37,7 +37,7 @@ export default function LandingPage() {
       >
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <AmigoOrb size={18} />
+            {/* <AmigoOrb size={18} /> */}
           </div>
           <div className="flex items-center gap-6">
             <Link href="/missions" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
@@ -69,8 +69,8 @@ export default function LandingPage() {
       />
 
       {/* hero dual-column container */}
-      <div 
-        className="flex-1 flex flex-col lg:flex-row items-center justify-between px-8 lg:px-16 py-16 gap-12" 
+      <div
+        className="flex-1 flex flex-col lg:flex-row items-center justify-between px-8 lg:px-16 py-16 gap-12"
         style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto', width: '100%' }}
       >
         {/* Left Column: Headline, Input & Templates */}
@@ -96,9 +96,9 @@ export default function LandingPage() {
               gap: 6,
             }}
           >
-            <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--accent)' }} className="animate-pulse-dot" />
-            <span style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 11, color: 'var(--text)', marginRight: 4 }}>your amigo</span>
-            <span className="mono">/ v1.0</span>
+            {/* <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--accent)' }} className="animate-pulse-dot" /> */}
+            <span style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 30, color: 'var(--text)', marginRight: 4 }}>your amigo</span>
+            {/* <span className="mono">/ v1.0</span> */}
           </div>
 
           <h1
@@ -115,7 +115,7 @@ export default function LandingPage() {
             <br />
             moving <span style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontWeight: 300, color: 'var(--text)' }}>while you slept.</span>
           </h1>
-          
+
           <p style={{ color: 'var(--text-2)', fontSize: 14, lineHeight: 1.6, marginBottom: 36 }}>
             assign missions. autonomous workers research, reason and execute
             through anakin wire — delivering evidence-backed decisions while you build.
