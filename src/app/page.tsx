@@ -65,7 +65,7 @@ export default function LandingPage() {
   return (
     <div
       style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100vh', overflowY: 'auto' }}
-      className="flex flex-col"
+      className="flex flex-col grid-bg"
     >
       {/* top bar */}
       <nav

@@ -162,3 +162,20 @@ button:focus-visible { outline: 1px solid var(--text-2); outline-offset: 2px; }
   width: 1px;
   background: var(--border);
 }
+
+/* background grid lines for premium developer aesthetic */
+.grid-bg {
+  position: relative;
+}
+.grid-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+}
+
