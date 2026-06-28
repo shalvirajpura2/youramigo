@@ -84,27 +84,62 @@ export default function LandingPage() {
           </Link>
         </div>
       </nav>
+      {/* Faded background hero artwork on the right */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          width: '50%',
+          height: '100%',
+          backgroundImage: 'url(/amigo-hero.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.16,
+          pointerEvents: 'none',
+          zIndex: 0,
+          maskImage: 'linear-gradient(to left, black 20%, transparent 90%)',
+          WebkitMaskImage: 'linear-gradient(to left, black 20%, transparent 90%)',
+        }}
+      />
 
-      {/* hero */}
-      <div className="flex-1 flex flex-col items-center justify-center px-8 py-24" style={{ position: 'relative', zIndex: 1 }}>
+      {/* hero dual-column container */}
+      <div 
+        className="flex-1 flex flex-col lg:flex-row items-center justify-between px-8 lg:px-16 py-16 gap-12" 
+        style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto', width: '100%' }}
+      >
+        {/* Left Column: Headline, Input & Templates */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-          style={{ maxWidth: 560, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+          className="flex flex-col items-start text-left"
+          style={{ flex: 1, maxWidth: 520 }}
         >
-          <div style={{ marginBottom: 20 }}>
-            <AmigoOrb size={96} />
+          {/* Version Pill */}
+          <div
+            style={{
+              padding: '4px 10px',
+              border: '1px solid var(--border)',
+              borderRadius: 20,
+              background: 'var(--card)',
+              fontSize: 10,
+              color: 'var(--text-2)',
+              marginBottom: 20,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--accent)' }} className="animate-pulse-dot" />
+            <span className="mono">your amigo / v1.0</span>
           </div>
-          <p className="mono mb-6" style={{ color: 'var(--text-2)', fontSize: 12, letterSpacing: '0.08em' }}>
-            your amigo / v1.0
-          </p>
+
           <h1
             style={{
-              fontSize: 'clamp(36px, 5vw, 56px)',
+              fontSize: 'clamp(38px, 4.5vw, 54px)',
               fontWeight: 300,
-              lineHeight: 1.1,
+              lineHeight: 1.15,
               letterSpacing: '-0.03em',
               color: 'var(--text)',
               marginBottom: 24,
@@ -112,15 +147,16 @@ export default function LandingPage() {
           >
             your startup kept
             <br />
-            moving while you slept.
+            moving <span style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontWeight: 300, color: 'var(--text)' }}>while you slept.</span>
           </h1>
-          <p style={{ color: 'var(--text-2)', fontSize: 15, lineHeight: 1.7, marginBottom: 40 }}>
+          
+          <p style={{ color: 'var(--text-2)', fontSize: 14, lineHeight: 1.6, marginBottom: 36 }}>
             assign missions. autonomous workers research, reason and execute
             through anakin wire — delivering evidence-backed decisions while you build.
           </p>
 
           {/* mission input */}
-          <div style={{ marginBottom: 16 }}>
+          <div style={{ marginBottom: 20, width: '100%' }}>
             <div
               style={{
                 display: 'flex',
@@ -128,6 +164,7 @@ export default function LandingPage() {
                 borderRadius: 8,
                 background: 'var(--card)',
                 overflow: 'hidden',
+                width: '100%',
               }}
             >
               <input
@@ -167,148 +204,154 @@ export default function LandingPage() {
           </div>
 
           {/* mission templates */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
-            {MISSION_TEMPLATES.map((t) => (
-              <button
-                key={t}
-                onClick={() => { setInput(t); router.push('/missions') }}
-                style={{
-                  padding: '6px 12px',
-                  border: '1px solid var(--border)',
-                  borderRadius: 6,
-                  background: 'transparent',
-                  color: 'var(--text-2)',
-                  fontSize: 11,
-                  cursor: 'pointer',
-                  transition: 'all 0.1s',
-                  fontFamily: 'Inter, sans-serif',
-                }}
-                className="hover:bg-[var(--hover)] hover:text-white"
-              >
-                {t}
-              </button>
-            ))}
+          <div>
+            <div style={{ fontSize: 10, color: 'var(--text-3)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              suggested templates
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {MISSION_TEMPLATES.map((t) => (
+                <button
+                  key={t}
+                  onClick={() => { setInput(t); router.push('/missions') }}
+                  style={{
+                    padding: '6px 12px',
+                    border: '1px solid var(--border)',
+                    borderRadius: 6,
+                    background: 'transparent',
+                    color: 'var(--text-2)',
+                    fontSize: 11,
+                    cursor: 'pointer',
+                    transition: 'all 0.1s',
+                    fontFamily: 'Inter, sans-serif',
+                  }}
+                  className="hover:bg-[var(--hover)] hover:text-white"
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
           </div>
         </motion.div>
 
-        {/* terminal demo */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          style={{
-            width: '100%',
-            maxWidth: 680,
-            border: '1px solid var(--border)',
-            borderRadius: 10,
-            background: 'var(--card)',
-            overflow: 'hidden',
-          }}
-        >
-          {/* terminal header */}
-          <div
+        {/* Right Column: Terminal Demo & Live Status Card */}
+        <div style={{ flex: 1, width: '100%', maxWidth: 560, display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {/* terminal demo */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             style={{
-              padding: '10px 16px',
-              borderBottom: '1px solid var(--border)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
+              width: '100%',
+              border: '1px solid var(--border)',
+              borderRadius: 10,
+              background: 'var(--card)',
+              overflow: 'hidden',
             }}
           >
-            <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border)' }} />
-            <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border)' }} />
-            <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border)' }} />
-            <span className="mono" style={{ marginLeft: 8, fontSize: 10, color: 'var(--text-3)' }}>
-              live execution log
-            </span>
-          </div>
+            {/* terminal header */}
+            <div
+              style={{
+                padding: '10px 16px',
+                borderBottom: '1px solid var(--border)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+              }}
+            >
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border)' }} />
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border)' }} />
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--border)' }} />
+              <span className="mono" style={{ marginLeft: 8, fontSize: 10, color: 'var(--text-3)' }}>
+                live execution log
+              </span>
+            </div>
 
-          {/* terminal body */}
-          <div
-            ref={terminalRef}
-            style={{ padding: '16px', height: 280, overflowY: 'auto' }}
-            className="scroll-y"
+            {/* terminal body */}
+            <div
+              ref={terminalRef}
+              style={{ padding: '16px', height: 200, overflowY: 'auto' }}
+              className="scroll-y"
+            >
+              <AnimatePresence>
+                {visibleLines.map((line, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -4 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.15 }}
+                    className={`terminal-line ${line.type}`}
+                  >
+                    {line.text}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+              {visibleLines.length > 0 && (
+                <span className="terminal-line animate-blink">_</span>
+              )}
+            </div>
+          </motion.div>
+
+          {/* mission status card */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 4 }}
+            style={{
+              width: '100%',
+              border: '1px solid var(--border)',
+              borderRadius: 10,
+              background: 'var(--card)',
+              padding: 20,
+            }}
           >
-            <AnimatePresence>
-              {visibleLines.map((line, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -4 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.15 }}
-                  className={`terminal-line ${line.type}`}
-                >
-                  {line.text}
-                </motion.div>
-              ))}
-            </AnimatePresence>
-            {visibleLines.length > 0 && (
-              <span className="terminal-line animate-blink">_</span>
-            )}
-          </div>
-        </motion.div>
-
-        {/* mission status card */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 4 }}
-          style={{
-            marginTop: 24,
-            width: '100%',
-            maxWidth: 680,
-            border: '1px solid var(--border)',
-            borderRadius: 10,
-            background: 'var(--card)',
-            padding: 24,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-            <div>
-              <div style={{ fontSize: 11, color: 'var(--text-3)', marginBottom: 4 }}>mission</div>
-              <div style={{ fontSize: 13, color: 'var(--text)' }}>validate healthcare startup idea</div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--text-2)', display: 'inline-block' }} className="animate-pulse-dot" />
-              <span style={{ fontSize: 11, color: 'var(--text-2)' }}>running</span>
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 20 }}>
-            {[
-              { label: 'planner', status: 'complete' },
-              { label: 'market intelligence', status: 'running' },
-              { label: 'competitive research', status: 'running' },
-              { label: 'pricing intelligence', status: 'waiting' },
-            ].map((w) => (
-              <div key={w.label}>
-                <div style={{ fontSize: 10, color: 'var(--text-3)', marginBottom: 4 }}>{w.label}</div>
-                <div style={{ fontSize: 11, color: w.status === 'running' ? 'var(--text)' : w.status === 'complete' ? 'var(--text-2)' : 'var(--text-3)' }}>
-                  {w.status}
-                </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+              <div>
+                <div style={{ fontSize: 10, color: 'var(--text-3)', marginBottom: 2 }}>active mission</div>
+                <div style={{ fontSize: 12, color: 'var(--text)' }}>validate healthcare startup idea</div>
               </div>
-            ))}
-          </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--text-2)', display: 'inline-block' }} className="animate-pulse-dot" />
+                <span style={{ fontSize: 10, color: 'var(--text-2)' }}>running</span>
+              </div>
+            </div>
 
-          <div style={{ display: 'flex', gap: 24 }}>
-            <div>
-              <div style={{ fontSize: 10, color: 'var(--text-3)', marginBottom: 2 }}>wire</div>
-              <div className="mono" style={{ fontSize: 13, color: 'var(--text)' }}>281 requests</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 16 }}>
+              {[
+                { label: 'planner', status: 'complete' },
+                { label: 'market intelligence', status: 'running' },
+                { label: 'competitive research', status: 'running' },
+                { label: 'pricing intelligence', status: 'waiting' },
+              ].map((w) => (
+                <div key={w.label}>
+                  <div style={{ fontSize: 9, color: 'var(--text-3)', marginBottom: 2 }}>{w.label}</div>
+                  <div style={{ fontSize: 10, color: w.status === 'running' ? 'var(--text)' : w.status === 'complete' ? 'var(--text-2)' : 'var(--text-3)' }}>
+                    {w.status}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div>
-              <div style={{ fontSize: 10, color: 'var(--text-3)', marginBottom: 2 }}>confidence</div>
-              <div className="mono" style={{ fontSize: 13, color: 'var(--text)' }}>87%</div>
+
+            <div style={{ display: 'flex', gap: 20 }}>
+              <div>
+                <div style={{ fontSize: 9, color: 'var(--text-3)', marginBottom: 2 }}>wire calls</div>
+                <div className="mono" style={{ fontSize: 11, color: 'var(--text)' }}>281 requests</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 9, color: 'var(--text-3)', marginBottom: 2 }}>confidence</div>
+                <div className="mono" style={{ fontSize: 11, color: 'var(--text)' }}>87%</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 9, color: 'var(--text-3)', marginBottom: 2 }}>recommendation</div>
+                <div style={{ fontSize: 11, color: 'var(--text-2)' }}>interview 10 clinic owners</div>
+              </div>
             </div>
-            <div>
-              <div style={{ fontSize: 10, color: 'var(--text-3)', marginBottom: 2 }}>recommended action</div>
-              <div style={{ fontSize: 12, color: 'var(--text-2)' }}>interview 10 clinic owners</div>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
 
+
       {/* features strip */}
-      <div style={{ borderTop: '1px solid var(--border)', padding: '40px 48px' }}>
+      <div style={{ borderTop: '1px solid var(--border)', padding: '40px 48px', position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40, maxWidth: 900, margin: '0 auto' }}>
           {[
             { title: 'mission-based', desc: 'assign missions in plain language. amigo handles everything else.' },
