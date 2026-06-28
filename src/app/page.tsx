@@ -36,10 +36,9 @@ export default function LandingPage() {
         className="px-8 lg:px-16 py-4"
       >
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          <span className="mono text-sm" style={{ color: 'var(--text)', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <AmigoOrb size={18} />
-            your amigo
-          </span>
+          </div>
           <div className="flex items-center gap-6">
             <Link href="/missions" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
               start mission
@@ -98,7 +97,8 @@ export default function LandingPage() {
             }}
           >
             <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--accent)' }} className="animate-pulse-dot" />
-            <span className="mono">your amigo / v1.0</span>
+            <span style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 11, color: 'var(--text)', marginRight: 4 }}>your amigo</span>
+            <span className="mono">/ v1.0</span>
           </div>
 
           <h1
@@ -198,22 +198,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* features list */}
-          <div style={{ borderTop: '1px solid var(--border)', paddingTop: 28, width: '100%' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 24px' }}>
-              {[
-                { title: 'mission-based', desc: 'assign missions in plain language. amigo handles everything else.' },
-                { title: 'anakin wire', desc: 'every insight comes from real web data through wire — not simulated.' },
-                { title: 'persistent memory', desc: 'workers remember everything. missions run continuously, even when you sleep.' },
-                { title: 'wire explorer', desc: 'see every wire request in real time. full observability into the data pipeline.' },
-              ].map((f) => (
-                <div key={f.title}>
-                  <div style={{ fontSize: 11, color: 'var(--text)', marginBottom: 4, fontWeight: 500 }}>{f.title}</div>
-                  <div style={{ fontSize: 11, color: 'var(--text-2)', lineHeight: 1.5 }}>{f.desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+
         </motion.div>
       </div>
     </div>
