@@ -111,22 +111,22 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## screenshots
 
 ### landing page
-![landing page](/screenshots/landing.png)
+![landing page](public/screenshots/landing.png)
 
 ### missions workspace
-![missions workspace](/screenshots/missions.png)
+![missions workspace](public/screenshots/missions.png)
 
 ### mission research details
-![mission research details](/screenshots/mission-detail.png)
+![mission research details](public/screenshots/mission-detail.png)
 
 ### anakin wire explorer
-![wire explorer](/screenshots/wire-explorer.png)
+![wire explorer](public/screenshots/wire-explorer.png)
 
 ### memory semantic graph
-![memory semantic graph](/screenshots/memory-graph.png)
+![memory semantic graph](public/screenshots/memory-graph.png)
 
 ### voice command mic
-![voice command mic](/screenshots/voice.png)
+![voice command mic](public/screenshots/voice.png)
 
 ### settings panel
-![settings panel](/screenshots/settings.png)
+![settings panel](public/screenshots/settings.png)
