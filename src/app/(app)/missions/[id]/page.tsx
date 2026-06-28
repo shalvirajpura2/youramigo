@@ -209,8 +209,8 @@ export default function MissionDetailPage({ params }: { params: Promise<{ id: st
             style={{
               background: 'none',
               border: 'none',
-              borderBottom: tab === t ? '1px solid var(--text)' : '1px solid transparent',
-              padding: '8px 16px',
+              borderBottom: tab === t ? '2px solid var(--accent)' : '2px solid transparent',
+              padding: '8px 16px 6px 16px',
               color: tab === t ? 'var(--text)' : 'var(--text-2)',
               cursor: 'pointer',
               fontSize: 11,

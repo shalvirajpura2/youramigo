@@ -86,7 +86,7 @@ export default function Sidebar() {
                   }}
                   className={active ? '' : 'hover:bg-[var(--hover)] hover:text-white'}
                 >
-                  <Icon size={13} style={{ flexShrink: 0, opacity: active ? 1 : 0.7 }} />
+                  <Icon size={13} style={{ flexShrink: 0, color: active ? 'var(--accent)' : 'inherit', opacity: active ? 1 : 0.7 }} />
                   <span>{label}</span>
                 </Link>
               </li>
