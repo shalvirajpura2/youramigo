@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
+import AmigoOrb from '@/components/ui/AmigoOrb'
 
 const MISSION_TEMPLATES = [
   'validate startup idea',
@@ -32,16 +33,21 @@ export default function LandingPage() {
       {/* top bar */}
       <nav
         style={{ borderBottom: '1px solid var(--border)', position: 'relative', zIndex: 1 }}
-        className="flex items-center justify-between px-8 py-4"
+        className="px-8 lg:px-16 py-4"
       >
-        <span className="mono text-sm" style={{ color: 'var(--text)' }}>your amigo</span>
-        <div className="flex items-center gap-6">
-          <Link href="/missions" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
-            start mission
-          </Link>
-          <Link href="/dashboard" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
-            dashboard
-          </Link>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <span className="mono text-sm" style={{ color: 'var(--text)', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <AmigoOrb size={18} />
+            your amigo
+          </span>
+          <div className="flex items-center gap-6">
+            <Link href="/missions" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
+              start mission
+            </Link>
+            <Link href="/dashboard" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
+              dashboard
+            </Link>
+          </div>
         </div>
       </nav>
       {/* Faded background hero artwork on the right */}
@@ -164,7 +170,7 @@ export default function LandingPage() {
           </div>
 
           {/* mission templates */}
-          <div>
+          <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 10, color: 'var(--text-3)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
               suggested templates
             </div>
@@ -191,25 +197,24 @@ export default function LandingPage() {
               ))}
             </div>
           </div>
-        </motion.div>
-      </div>
 
-
-      {/* features strip */}
-      <div style={{ borderTop: '1px solid var(--border)', padding: '40px 48px', position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40, maxWidth: 900, margin: '0 auto' }}>
-          {[
-            { title: 'mission-based', desc: 'assign missions in plain language. amigo handles everything else.' },
-            { title: 'anakin wire', desc: 'every insight comes from real web data through wire — not simulated.' },
-            { title: 'persistent memory', desc: 'workers remember everything. missions run continuously, even when you sleep.' },
-            { title: 'wire explorer', desc: 'see every wire request in real time. full observability into the data pipeline.' },
-          ].map((f) => (
-            <div key={f.title}>
-              <div style={{ fontSize: 12, color: 'var(--text)', marginBottom: 8, fontWeight: 500 }}>{f.title}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-2)', lineHeight: 1.7 }}>{f.desc}</div>
+          {/* features list */}
+          <div style={{ borderTop: '1px solid var(--border)', paddingTop: 28, width: '100%' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 24px' }}>
+              {[
+                { title: 'mission-based', desc: 'assign missions in plain language. amigo handles everything else.' },
+                { title: 'anakin wire', desc: 'every insight comes from real web data through wire — not simulated.' },
+                { title: 'persistent memory', desc: 'workers remember everything. missions run continuously, even when you sleep.' },
+                { title: 'wire explorer', desc: 'see every wire request in real time. full observability into the data pipeline.' },
+              ].map((f) => (
+                <div key={f.title}>
+                  <div style={{ fontSize: 11, color: 'var(--text)', marginBottom: 4, fontWeight: 500 }}>{f.title}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-2)', lineHeight: 1.5 }}>{f.desc}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   )
