@@ -41,6 +41,12 @@ export default function LandingPage() {
             <span style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 18, color: 'var(--text)' }}>your amigo</span>
           </div>
           <div className="flex items-center gap-6">
+            <a href="https://github.com/shalvirajpura2/youramigo" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
+              give it a star ★
+            </a>
+            <a href="https://shalvirajpura.xyz" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
+              builder
+            </a>
             <Link href="/missions" style={{ color: 'var(--text-2)', fontSize: 12 }} className="hover:text-white transition-colors">
               start mission
             </Link>

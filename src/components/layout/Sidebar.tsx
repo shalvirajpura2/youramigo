@@ -133,6 +133,45 @@ export default function Sidebar() {
           </span>
         </button>
       </div>
+
+      {/* star and builder links */}
+      <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <a
+          href="https://github.com/shalvirajpura2/youramigo"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            fontSize: 11,
+            color: 'var(--text-2)',
+            textDecoration: 'none',
+            transition: 'color 0.15s',
+          }}
+          className="hover:text-white"
+        >
+          <span>give it a star ★</span>
+        </a>
+        <a
+          href="https://shalvirajpura.xyz"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            fontSize: 11,
+            color: 'var(--text-3)',
+            textDecoration: 'none',
+            transition: 'color 0.15s',
+          }}
+          className="hover:text-white"
+        >
+          <span>builder:</span>
+          <span style={{ color: 'var(--text-2)' }}>shalvirajpura.xyz</span>
+        </a>
+      </div>
     </div>
   )
 }
