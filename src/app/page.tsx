@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, ChevronRight } from 'lucide-react'
+import AmigoOrb from '@/components/ui/AmigoOrb'
 
 const TERMINAL_LINES = [
   { delay: 0, text: '> mission started: validate healthcare startup idea', type: 'highlight' },
@@ -91,8 +92,11 @@ export default function LandingPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
-          style={{ maxWidth: 560 }}
+          style={{ maxWidth: 560, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         >
+          <div style={{ marginBottom: 20 }}>
+            <AmigoOrb size={96} />
+          </div>
           <p className="mono mb-6" style={{ color: 'var(--text-2)', fontSize: 12, letterSpacing: '0.08em' }}>
             your amigo / v1.0
           </p>

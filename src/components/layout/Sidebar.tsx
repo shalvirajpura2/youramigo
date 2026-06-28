@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useStore } from '@/lib/store'
+import AmigoOrb from '@/components/ui/AmigoOrb'
 import {
   LayoutDashboard, Target, Users, Brain, Database,
   Activity, Settings, Zap, Mic, Radio
@@ -38,7 +39,8 @@ export default function Sidebar() {
           justifyContent: 'space-between',
         }}
       >
-        <Link href="/missions" style={{ textDecoration: 'none' }}>
+        <Link href="/missions" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <AmigoOrb size={18} />
           <span className="mono" style={{ fontSize: 13, color: 'var(--text)', fontWeight: 500 }}>
             your amigo
           </span>
