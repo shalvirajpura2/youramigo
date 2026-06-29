@@ -25,13 +25,17 @@ const WIRE_BASE = 'https://api.anakin.io/v1'
 
 class WireService {
   private getApiKey(): string {
-    // Read from store at call time to always get latest
-    const userKey = useStore.getState().settings.wireApiKey
-    if (userKey) return userKey
+    return useStore.getState().settings.wireApiKey
+  }
 
-    // Fallback to configured key on the user's side (env variable or custom fallback)
-    const defaultKey = process.env.NEXT_PUBLIC_ANAKIN_KEY || ''
-    return defaultKey
+  private checkKeyOrTrial(): boolean {
+    const userKey = this.getApiKey()
+    if (userKey) return true
+
+    const freeMissionsUsed = useStore.getState().freeMissionsUsed
+    if (freeMissionsUsed < 2) return true
+
+    return false
   }
 
   private log(line: string) {
@@ -69,8 +73,8 @@ class WireService {
     meta: WireServiceOptions,
     retryCount = 0
   ): Promise<{ content: string; data?: unknown; cached: boolean }> {
-    const apiKey = this.getApiKey()
-    if (!apiKey) throw new Error('wire api key not configured')
+    if (!this.checkKeyOrTrial()) throw new Error('wire api key not configured')
+    const userKey = this.getApiKey()
 
     const reqId = this.trackRequest({
       missionId: meta.missionId,
@@ -89,16 +93,20 @@ class WireService {
 
     const start = Date.now()
     try {
-      const res = await fetch(`${WIRE_BASE}/scrape`, {
+      const res = await fetch('/api/wire', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': apiKey,
         },
         body: JSON.stringify({
-          url,
-          generate_json: options.generateJson,
-          format: options.format || 'markdown',
+          endpoint: '/scrape',
+          method: 'POST',
+          payload: {
+            url,
+            generate_json: options.generateJson,
+            format: options.format || 'markdown',
+          },
+          userKey,
         }),
       })
 
@@ -147,8 +155,8 @@ class WireService {
     meta: WireServiceOptions,
     retryCount = 0
   ): Promise<{ results: Array<{ title: string; url: string; content: string }>; cached: boolean }> {
-    const apiKey = this.getApiKey()
-    if (!apiKey) throw new Error('wire api key not configured')
+    if (!this.checkKeyOrTrial()) throw new Error('wire api key not configured')
+    const userKey = this.getApiKey()
 
     const reqId = this.trackRequest({
       missionId: meta.missionId,
@@ -167,13 +175,17 @@ class WireService {
 
     const start = Date.now()
     try {
-      const res = await fetch(`${WIRE_BASE}/search`, {
+      const res = await fetch('/api/wire', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': apiKey,
         },
-        body: JSON.stringify({ prompt: query, limit: options.limit || 10 }),
+        body: JSON.stringify({
+          endpoint: '/search',
+          method: 'POST',
+          payload: { prompt: query, limit: options.limit || 10 },
+          userKey,
+        }),
       })
 
       const latencyMs = Date.now() - start
@@ -189,14 +201,23 @@ class WireService {
         responseSize: JSON.stringify(data).length,
       })
 
-      this.log(`wire ← search ${latencyMs}ms ${data.results?.length || 0} results`)
+      this.log(`wire ← ${res.ok ? 'ok' : 'error'} ${latencyMs}ms${cached ? ' [cached]' : ''}`)
 
       if (!res.ok && retryCount < 2) {
         await new Promise((r) => setTimeout(r, 1000 * (retryCount + 1)))
         return this.search(query, options, meta, retryCount + 1)
       }
 
-      return { results: data.results || [], cached }
+      const results = (data.results || []).map((r: any) => ({
+        title: r.title || 'no title',
+        url: r.url || 'no url',
+        content: r.snippet || r.content || '',
+      }))
+
+      return {
+        results,
+        cached,
+      }
     } catch (err) {
       const latencyMs = Date.now() - start
       this.completeRequest(reqId, { status: 'error', latencyMs })
@@ -210,8 +231,8 @@ class WireService {
     query: string,
     meta: WireServiceOptions
   ): Promise<{ summary: string; sources: string[]; cached: boolean }> {
-    const apiKey = this.getApiKey()
-    if (!apiKey) throw new Error('wire api key not configured')
+    if (!this.checkKeyOrTrial()) throw new Error('wire api key not configured')
+    const userKey = this.getApiKey()
 
     const reqId = this.trackRequest({
       missionId: meta.missionId,
@@ -230,18 +251,22 @@ class WireService {
     const start = Date.now()
     try {
       // 1. Submit the agentic search job
-      const res = await fetch(`${WIRE_BASE}/agentic-search`, {
+      const res = await fetch('/api/wire', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': apiKey,
         },
-        body: JSON.stringify({ prompt: query }),
+        body: JSON.stringify({
+          endpoint: '/agentic-search',
+          method: 'POST',
+          payload: { prompt: query },
+          userKey,
+        }),
       })
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}))
-        throw new Error(errData.message || `HTTP ${res.status}`)
+        throw new Error(errData.error || errData.message || `HTTP ${res.status}`)
       }
 
       const submitData = await res.json()
@@ -264,10 +289,16 @@ class WireService {
         
         this.log(`wire → polling job status [attempt ${attempts}/${maxAttempts}]`)
         
-        const pollRes = await fetch(`${WIRE_BASE}/agentic-search/${jobId}`, {
+        const pollRes = await fetch('/api/wire', {
+          method: 'POST',
           headers: {
-            'X-API-Key': apiKey,
+            'Content-Type': 'application/json',
           },
+          body: JSON.stringify({
+            endpoint: `/agentic-search/${jobId}`,
+            method: 'GET',
+            userKey,
+          }),
         })
 
         if (!pollRes.ok) {
@@ -326,8 +357,8 @@ class WireService {
     url: string,
     meta: WireServiceOptions
   ): Promise<{ pages: Array<{ url: string; content: string }> }> {
-    const apiKey = this.getApiKey()
-    if (!apiKey) throw new Error('wire api key not configured')
+    if (!this.checkKeyOrTrial()) throw new Error('wire api key not configured')
+    const userKey = this.getApiKey()
 
     const reqId = this.trackRequest({
       missionId: meta.missionId,
@@ -344,13 +375,17 @@ class WireService {
 
     const start = Date.now()
     try {
-      const res = await fetch(`${WIRE_BASE}/crawl`, {
+      const res = await fetch('/api/wire', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': apiKey,
         },
-        body: JSON.stringify({ url, limit: 20 }),
+        body: JSON.stringify({
+          endpoint: '/crawl',
+          method: 'POST',
+          payload: { url, limit: 20 },
+          userKey,
+        }),
       })
 
       const latencyMs = Date.now() - start
