@@ -12,8 +12,8 @@
   --success: #3d9970;
   --error: #c0392b;
   --warning: #d4a017;
-  --accent: #2e63a5;
-  --accent-dim: rgba(46, 99, 165, 0.15);
+  --accent: #f59e0b;
+  --accent-dim: rgba(245, 158, 11, 0.15);
 }
 
 * {
