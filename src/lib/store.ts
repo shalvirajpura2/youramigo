@@ -47,11 +47,18 @@ interface AmigoStore {
   // sidebar collapsed
   sidebarCollapsed: boolean
   toggleSidebar: () => void
+
+  // free trial
+  freeMissionsUsed: number
+  incrementFreeMissionsUsed: () => void
 }
 
 export const useStore = create<AmigoStore>()(
   persist(
     (set) => ({
+      freeMissionsUsed: 0,
+      incrementFreeMissionsUsed: () =>
+        set((state) => ({ freeMissionsUsed: state.freeMissionsUsed + 1 })),
       settings: {
         wireApiKey: '',
         llmModel: 'gpt-4o',
@@ -116,6 +123,7 @@ export const useStore = create<AmigoStore>()(
         transcripts: state.transcripts,
         liveMode: state.liveMode,
         sidebarCollapsed: state.sidebarCollapsed,
+        freeMissionsUsed: state.freeMissionsUsed,
       }),
     }
   )

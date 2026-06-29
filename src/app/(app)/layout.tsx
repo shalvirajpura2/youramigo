@@ -10,7 +10,7 @@ import TerminalPanel from '@/components/terminal/TerminalPanel'
 import CommandPalette from '@/components/command/CommandPalette'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const { setCommandPaletteOpen, settings } = useStore()
+  const { setCommandPaletteOpen, settings, freeMissionsUsed } = useStore()
 
   // Global keyboard shortcut: Ctrl+K or Cmd+K
   useEffect(() => {
@@ -50,8 +50,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         {!settings.wireApiKey && (
           <div
             style={{
-              background: 'rgba(217, 119, 6, 0.05)',
-              borderBottom: '1px solid rgba(217, 119, 6, 0.15)',
+              background: freeMissionsUsed >= 2 ? 'rgba(239, 68, 68, 0.05)' : 'rgba(217, 119, 6, 0.05)',
+              borderBottom: freeMissionsUsed >= 2 ? '1px solid rgba(239, 68, 68, 0.15)' : '1px solid rgba(217, 119, 6, 0.15)',
               padding: '10px 16px',
               display: 'flex',
               alignItems: 'center',
@@ -60,16 +60,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgb(245, 158, 11)' }} className="animate-pulse-dot" />
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: freeMissionsUsed >= 2 ? 'rgb(239, 68, 68)' : 'rgb(245, 158, 11)' }} className="animate-pulse-dot" />
               <span style={{ fontSize: 11, color: 'var(--text-2)', fontFamily: 'Inter, sans-serif' }}>
-                Anakin Wire API key is not configured. Active missions will execute in simulation mode.
+                {freeMissionsUsed >= 2
+                  ? 'Free trial limit reached (2 runs). Configure your own API key to continue running missions.'
+                  : `Free trial active: You have ${2 - freeMissionsUsed} free run${2 - freeMissionsUsed === 1 ? '' : 's'} remaining.`}
               </span>
             </div>
             <Link
               href="/wire"
               style={{
                 fontSize: 11,
-                color: 'rgb(245, 158, 11)',
+                color: freeMissionsUsed >= 2 ? 'rgb(239, 68, 68)' : 'rgb(245, 158, 11)',
                 fontWeight: 500,
                 textDecoration: 'underline',
                 fontFamily: 'Inter, sans-serif',

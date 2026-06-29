@@ -429,17 +429,42 @@ export async function runMission(missionId: string) {
   const mission = missions.find((m) => m.id === missionId)
   if (!mission) return
 
-  const apiKey = useStore.getState().settings.wireApiKey
+  const userKey = useStore.getState().settings.wireApiKey
+  const defaultKey = process.env.NEXT_PUBLIC_ANAKIN_API_KEY || ''
+  const apiKey = userKey || defaultKey
+
+  // Check free tries limits if user has NOT entered their own API key
+  if (!userKey) {
+    const freeMissionsUsed = useStore.getState().freeMissionsUsed
+    if (freeMissionsUsed >= 2) {
+      log(`✗ free trial limit reached (2 runs). go to /wire to add your own api key (byok).`)
+      addEvent(missionId, {
+        timestamp: new Date().toISOString(),
+        workerId: 'planner', workerName: 'planner',
+        type: 'error',
+        title: 'free trial limit reached',
+        body: 'you have used your 2 free tries. to run more missions, please configure your own anakin api key in settings (byok).',
+      })
+      return
+    }
+  }
+
+  // If we still don't have any key (user or default developer key), pause execution
   if (!apiKey) {
-    log(`✗ wire api key not configured. go to /wire to add your anakin key.`)
+    log(`✗ wire api key not configured. go to /wire to add your own anakin key.`)
     addEvent(missionId, {
       timestamp: new Date().toISOString(),
       workerId: 'planner', workerName: 'planner',
       type: 'error',
       title: 'mission paused — wire api key required',
-      body: 'go to /wire and enter your anakin wire api key to start executing',
+      body: 'go to /wire and enter your own anakin wire api key to start executing',
     })
     return
+  }
+
+  // If using the default key, increment free missions used
+  if (!userKey) {
+    useStore.getState().incrementFreeMissionsUsed()
   }
 
   // Mark as running

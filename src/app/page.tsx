@@ -19,7 +19,7 @@ const MISSION_TEMPLATES = [
 
 export default function LandingPage() {
   const router = useRouter()
-  const { settings } = useStore()
+  const { settings, freeMissionsUsed } = useStore()
   const [input, setInput] = useState('')
   const [isFocused, setIsFocused] = useState(false)
 
@@ -95,8 +95,8 @@ export default function LandingPage() {
             <div
               style={{
                 width: '100%',
-                background: 'rgba(217, 119, 6, 0.06)',
-                border: '1px solid rgba(217, 119, 6, 0.15)',
+                background: freeMissionsUsed >= 2 ? 'rgba(239, 68, 68, 0.06)' : 'rgba(217, 119, 6, 0.06)',
+                border: freeMissionsUsed >= 2 ? '1px solid rgba(239, 68, 68, 0.15)' : '1px solid rgba(217, 119, 6, 0.15)',
                 borderRadius: 8,
                 padding: '12px 16px',
                 marginBottom: 24,
@@ -107,15 +107,17 @@ export default function LandingPage() {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgb(245, 158, 11)' }} className="animate-pulse-dot" />
-                <span style={{ fontSize: 10, color: 'rgb(245, 158, 11)', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                  api key required
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: freeMissionsUsed >= 2 ? 'rgb(239, 68, 68)' : 'rgb(245, 158, 11)' }} className="animate-pulse-dot" />
+                <span style={{ fontSize: 10, color: freeMissionsUsed >= 2 ? 'rgb(239, 68, 68)' : 'rgb(245, 158, 11)', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                  {freeMissionsUsed >= 2 ? 'trial limit reached' : 'free trial active'}
                 </span>
               </div>
               <p style={{ fontSize: 11, color: 'var(--text-2)', lineHeight: 1.4, margin: 0 }}>
-                Anakin Wire API key is not configured. Go to the wire settings page to set your key to run real-time search queries.
+                {freeMissionsUsed >= 2
+                  ? 'You have used your 2 free runs. To continue running autonomous missions, configure your own API key in Settings (BYOK).'
+                  : `You have ${2 - freeMissionsUsed} free trial run${2 - freeMissionsUsed === 1 ? '' : 's'} remaining. Configure your own API key in Settings for unlimited queries.`}
               </p>
-              <Link href="/wire" style={{ fontSize: 11, color: 'rgb(245, 158, 11)', fontWeight: 500, marginTop: 2, textDecoration: 'underline' }}>
+              <Link href="/wire" style={{ fontSize: 11, color: freeMissionsUsed >= 2 ? 'rgb(239, 68, 68)' : 'rgb(245, 158, 11)', fontWeight: 500, marginTop: 2, textDecoration: 'underline' }}>
                 Configure API Key →
               </Link>
             </div>

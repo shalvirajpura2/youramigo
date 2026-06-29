@@ -26,7 +26,12 @@ const WIRE_BASE = 'https://api.anakin.io/v1'
 class WireService {
   private getApiKey(): string {
     // Read from store at call time to always get latest
-    return useStore.getState().settings.wireApiKey
+    const userKey = useStore.getState().settings.wireApiKey
+    if (userKey) return userKey
+
+    // Fallback to configured key on the user's side (env variable or custom fallback)
+    const defaultKey = process.env.NEXT_PUBLIC_ANAKIN_API_KEY || ''
+    return defaultKey
   }
 
   private log(line: string) {
