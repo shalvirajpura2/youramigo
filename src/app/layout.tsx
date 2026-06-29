@@ -12,10 +12,10 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/screenshots/landing.png',
+        url: '/amigo-hero.png',
         width: 1200,
         height: 630,
-        alt: 'your amigo dashboard',
+        alt: 'your amigo hero artwork',
       },
     ],
   },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'your amigo',
     description: 'your startup kept moving while you slept.',
-    images: ['/screenshots/landing.png'],
+    images: ['/amigo-hero.png'],
   },
 }
 
