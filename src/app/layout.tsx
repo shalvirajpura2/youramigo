@@ -10,6 +10,20 @@ export const metadata: Metadata = {
     title: 'your amigo',
     description: 'your startup kept moving while you slept.',
     type: 'website',
+    images: [
+      {
+        url: '/screenshots/landing.png',
+        width: 1200,
+        height: 630,
+        alt: 'your amigo dashboard',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'your amigo',
+    description: 'your startup kept moving while you slept.',
+    images: ['/screenshots/landing.png'],
   },
 }
 
