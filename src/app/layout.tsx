@@ -2,14 +2,10 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'https://youramigo.vercel.app'
-
 export const metadata: Metadata = {
   title: 'your amigo',
   description: 'mission-based operating system for founders. assign missions. wake up to progress.',
-  metadataBase: new URL(baseUrl),
+  metadataBase: new URL('https://youramigo.vercel.app'),
   openGraph: {
     title: 'your amigo',
     description: 'your startup kept moving while you slept.',
