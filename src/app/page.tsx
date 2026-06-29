@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import AmigoOrb from '@/components/ui/AmigoOrb'
+import { useStore } from '@/lib/store'
 
 const MISSION_TEMPLATES = [
   'validate startup idea',
@@ -18,6 +19,7 @@ const MISSION_TEMPLATES = [
 
 export default function LandingPage() {
   const router = useRouter()
+  const { settings } = useStore()
   const [input, setInput] = useState('')
   const [isFocused, setIsFocused] = useState(false)
 
@@ -86,8 +88,38 @@ export default function LandingPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="flex flex-col items-start text-left"
-          style={{ flex: 1, maxWidth: 520 }}
+          style={{ flex: 1, maxWidth: 520, width: '100%' }}
         >
+          {/* API Key warning banner */}
+          {!settings.wireApiKey && (
+            <div
+              style={{
+                width: '100%',
+                background: 'rgba(217, 119, 6, 0.06)',
+                border: '1px solid rgba(217, 119, 6, 0.15)',
+                borderRadius: 8,
+                padding: '12px 16px',
+                marginBottom: 24,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 6,
+                alignItems: 'start',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgb(245, 158, 11)' }} className="animate-pulse-dot" />
+                <span style={{ fontSize: 10, color: 'rgb(245, 158, 11)', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                  api key required
+                </span>
+              </div>
+              <p style={{ fontSize: 11, color: 'var(--text-2)', lineHeight: 1.4, margin: 0 }}>
+                Anakin Wire API key is not configured. Go to the wire settings page to set your key to run real-time search queries.
+              </p>
+              <Link href="/wire" style={{ fontSize: 11, color: 'rgb(245, 158, 11)', fontWeight: 500, marginTop: 2, textDecoration: 'underline' }}>
+                Configure API Key →
+              </Link>
+            </div>
+          )}
           <h1
             style={{
               fontSize: 'clamp(38px, 4.5vw, 54px)',

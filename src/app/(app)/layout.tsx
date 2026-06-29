@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import Link from 'next/link'
 import { useStore } from '@/lib/store'
 import Sidebar from '@/components/layout/Sidebar'
 import CommandBar from '@/components/layout/CommandBar'
@@ -9,7 +10,7 @@ import TerminalPanel from '@/components/terminal/TerminalPanel'
 import CommandPalette from '@/components/command/CommandPalette'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const { setCommandPaletteOpen } = useStore()
+  const { setCommandPaletteOpen, settings } = useStore()
 
   // Global keyboard shortcut: Ctrl+K or Cmd+K
   useEffect(() => {
@@ -45,8 +46,42 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* main workspace */}
-      <div style={{ gridColumn: '2', gridRow: '2', overflowY: 'auto' }} className="scroll-y">
-        {children}
+      <div style={{ gridColumn: '2', gridRow: '2', overflowY: 'auto', display: 'flex', flexDirection: 'column' }} className="scroll-y">
+        {!settings.wireApiKey && (
+          <div
+            style={{
+              background: 'rgba(217, 119, 6, 0.05)',
+              borderBottom: '1px solid rgba(217, 119, 6, 0.15)',
+              padding: '10px 16px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexShrink: 0,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgb(245, 158, 11)' }} className="animate-pulse-dot" />
+              <span style={{ fontSize: 11, color: 'var(--text-2)', fontFamily: 'Inter, sans-serif' }}>
+                Anakin Wire API key is not configured. Active missions will execute in simulation mode.
+              </span>
+            </div>
+            <Link
+              href="/wire"
+              style={{
+                fontSize: 11,
+                color: 'rgb(245, 158, 11)',
+                fontWeight: 500,
+                textDecoration: 'underline',
+                fontFamily: 'Inter, sans-serif',
+              }}
+            >
+              Configure key
+            </Link>
+          </div>
+        )}
+        <div style={{ flex: 1, overflowY: 'auto' }} className="scroll-y">
+          {children}
+        </div>
       </div>
 
       {/* bottom terminal */}
