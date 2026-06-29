@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import AmigoOrb from '@/components/ui/AmigoOrb'
 import { useStore } from '@/lib/store'
+import { generateId } from '@/lib/utils'
 
 const MISSION_TEMPLATES = [
   'validate startup idea',
@@ -19,12 +20,50 @@ const MISSION_TEMPLATES = [
 
 export default function LandingPage() {
   const router = useRouter()
-  const { settings, freeMissionsUsed } = useStore()
+  const { settings, freeMissionsUsed, addMission } = useStore()
   const [input, setInput] = useState('')
   const [isFocused, setIsFocused] = useState(false)
 
   const handleStart = () => {
-    router.push('/missions')
+    if (!input.trim()) return
+    const id = generateId()
+    const now = new Date().toISOString()
+    const defaultWorkers = ['market-intelligence', 'customer-discovery', 'competitive-research', 'reporting']
+
+    const mission: any = {
+      id,
+      title: input.trim(),
+      description: input.trim(),
+      status: 'planning',
+      createdAt: now,
+      updatedAt: now,
+      workers: defaultWorkers.map((wId) => ({
+        workerId: wId,
+        missionId: id,
+        status: 'idle',
+        wireRequests: 0,
+        findings: 0,
+        memory: [],
+      })),
+      wireRequests: 0,
+      confidence: 0,
+      findings: [],
+      timeline: [
+        {
+          id: generateId(),
+          timestamp: now,
+          workerId: 'planner',
+          workerName: 'planner',
+          type: 'started',
+          title: 'mission created',
+          body: `workers assigned: ${defaultWorkers.length}`,
+        },
+      ],
+    }
+
+    addMission(mission)
+    setInput('')
+    router.push(`/missions/${id}`)
   }
 
   return (
