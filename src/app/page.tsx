@@ -108,7 +108,7 @@ export default function LandingPage() {
           backgroundImage: 'url(/amigo-hero.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.30,
+          opacity: 0.55,
           pointerEvents: 'none',
           zIndex: 0,
           maskImage: 'linear-gradient(to left, black 20%, transparent 90%)',

@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useStore } from '@/lib/store'
 import { useRouter } from 'next/navigation'
-import { Search, X, Target, Users, Database, Brain, Settings, Activity, Radio, Mic } from 'lucide-react'
+import { Search, X, Target, Users, Database, Brain, Settings, Activity, Radio, Mic, HelpCircle } from 'lucide-react'
 
 const COMMANDS = [
+  { id: 'tour', label: 'take platform tour', description: 'understand how the platform works', icon: HelpCircle, action: '/tour' },
   { id: 'mission-new', label: 'new mission', description: 'start a new mission', icon: Target, action: '/missions' },
   { id: 'dashboard', label: 'go to dashboard', description: 'overview of all activity', icon: Target, action: '/dashboard' },
   { id: 'missions', label: 'go to missions', description: 'view all missions', icon: Target, action: '/missions' },

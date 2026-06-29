@@ -6,11 +6,12 @@ import { useStore } from '@/lib/store'
 import AmigoOrb from '@/components/ui/AmigoOrb'
 import {
   LayoutDashboard, Target, Users, Brain, Database,
-  Activity, Settings, Zap, Mic, Radio
+  Activity, Settings, Zap, Mic, Radio, HelpCircle
 } from 'lucide-react'
 
 const NAV = [
   { href: '/dashboard', label: 'dashboard', icon: LayoutDashboard },
+  { href: '/tour', label: 'tour', icon: HelpCircle },
   { href: '/missions', label: 'missions', icon: Target },
   { href: '/crew', label: 'crew', icon: Users },
   { href: '/memory', label: 'memory', icon: Brain },

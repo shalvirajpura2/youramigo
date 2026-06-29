@@ -8,6 +8,7 @@ import CommandBar from '@/components/layout/CommandBar'
 import ActivityPanel from '@/components/layout/ActivityPanel'
 import TerminalPanel from '@/components/terminal/TerminalPanel'
 import CommandPalette from '@/components/command/CommandPalette'
+import TourOverlay from '@/components/ui/TourOverlay'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { setCommandPaletteOpen, settings, freeMissionsUsed } = useStore()
@@ -98,6 +99,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* command palette overlay */}
       <CommandPalette />
+      <TourOverlay />
     </div>
   )
 }

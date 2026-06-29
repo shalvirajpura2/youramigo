@@ -51,6 +51,12 @@ interface AmigoStore {
   // free trial
   freeMissionsUsed: number
   incrementFreeMissionsUsed: () => void
+
+  // onboarding tour
+  isTourActive: boolean
+  tourStep: number
+  setTourActive: (active: boolean) => void
+  setTourStep: (step: number) => void
 }
 
 export const useStore = create<AmigoStore>()(
@@ -111,6 +117,11 @@ export const useStore = create<AmigoStore>()(
       sidebarCollapsed: false,
       toggleSidebar: () =>
         set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
+
+      isTourActive: false,
+      tourStep: 0,
+      setTourActive: (active) => set({ isTourActive: active, tourStep: 0 }),
+      setTourStep: (step) => set({ tourStep: step }),
     }),
     {
       name: 'amigo-store',

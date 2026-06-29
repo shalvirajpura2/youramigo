@@ -7,8 +7,8 @@ export default function AmigoOrb({ size = 120 }: { size?: number }) {
   const count = 24
   for (let i = 0; i < count; i++) {
     const angle = (i / count) * Math.PI * 2
-    const x = Math.cos(angle) * 32
-    const y = Math.sin(angle) * 32
+    const x = parseFloat((Math.cos(angle) * 32).toFixed(4))
+    const y = parseFloat((Math.sin(angle) * 32).toFixed(4))
     dots.push({ x, y, delay: (i % 6) * 0.2 })
   }
 

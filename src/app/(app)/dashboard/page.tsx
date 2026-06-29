@@ -26,7 +26,7 @@ export default function DashboardPage() {
         <h1 style={{ fontSize: 22, fontWeight: 300, color: 'var(--text)', letterSpacing: '-0.02em' }}>
           {activeMissions.length > 0
             ? `${activeMissions.length} mission${activeMissions.length > 1 ? 's' : ''} running.`
-            : 'good morning.'}
+            : 'hello builder.'}
         </h1>
         {activeMissions.length === 0 && (
           <p style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 6 }}>
