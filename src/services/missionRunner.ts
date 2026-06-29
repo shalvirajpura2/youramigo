@@ -430,7 +430,7 @@ export async function runMission(missionId: string) {
   if (!mission) return
 
   const userKey = useStore.getState().settings.wireApiKey
-  const defaultKey = process.env.NEXT_PUBLIC_ANAKIN_API_KEY || ''
+  const defaultKey = process.env.NEXT_PUBLIC_ANAKIN_KEY || ''
   const apiKey = userKey || defaultKey
 
   // Check free tries limits if user has NOT entered their own API key

@@ -30,7 +30,7 @@ class WireService {
     if (userKey) return userKey
 
     // Fallback to configured key on the user's side (env variable or custom fallback)
-    const defaultKey = process.env.NEXT_PUBLIC_ANAKIN_API_KEY || ''
+    const defaultKey = process.env.NEXT_PUBLIC_ANAKIN_KEY || ''
     return defaultKey
   }
 
